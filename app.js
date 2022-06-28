@@ -38,8 +38,8 @@ const keywords = process.env.KEYWORDS ? process.env.KEYWORDS.split(',') : [];
           // sendLineNotify(messageContent, process.env.LINE_NOTIFY_TOKEN);
           console.log(`${new Date()}: ${messageContent}`);
         }
-        originPostId = job.id;
       }
+      originPostId = jobs[0].id;
     } catch (error) {
       if (countFail > 10) {
         await sendLineNotify(`\n好像出事了! 但是我嘗試重新拿 Token 第 ${countFail} 次了所以暫時先把程式關閉，有空可以檢查一下。\n `, process.env.LINE_NOTIFY_TOKEN);
