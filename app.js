@@ -35,7 +35,7 @@ const keywords = process.env.KEYWORDS ? process.env.KEYWORDS.split(',') : [];
         if (keywords.length === 0 || keywords.some((kw) => title.includes(kw))) {
           const url = `https://chickpt.com.tw/dl?tp=4&um=1&ti=${job.id}&e=share_job`;
           const messageContent = `${job.job_title} ${job.job_salary}\n${url}`;
-          // sendLineNotify(messageContent, process.env.LINE_NOTIFY_TOKEN);
+          sendLineNotify(messageContent, process.env.LINE_NOTIFY_TOKEN);
           console.log(`${new Date()}: ${messageContent}`);
         }
       }
