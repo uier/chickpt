@@ -8,6 +8,7 @@ const getToken = require('./lib/getToken');
 let stopIntervalId;
 let countFail = 0;
 const keywords = process.env.KEYWORDS ? process.env.KEYWORDS.split(',') : [];
+const notifiedIds = new Set();
 (async () => {
   let originPostId = await getFirstPostId();
   stopIntervalId = setInterval(async () => {
@@ -33,6 +34,8 @@ const keywords = process.env.KEYWORDS ? process.env.KEYWORDS.split(',') : [];
         if (job.id === originPostId) break;
         const title = job.job_title.toLowerCase();
         if (keywords.length === 0 || keywords.some((kw) => title.includes(kw))) {
+          if (notifiedIds.has(job.id)) continue;
+          notifiedIds.add(job.id);
           const url = `https://chickpt.com.tw/dl?tp=4&um=1&ti=${job.id}&e=share_job`;
           const messageContent = `${job.job_title} ${job.job_salary}\n${url}`;
           sendLineNotify(messageContent, process.env.LINE_NOTIFY_TOKEN);
